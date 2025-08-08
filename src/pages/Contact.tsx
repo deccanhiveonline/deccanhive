@@ -15,15 +15,26 @@ const Contact = () => {
     const hasVisited = sessionStorage.getItem('contact-visited');
     return !hasVisited;
   });
-  
+
   const [showWhatsApp, setShowWhatsApp] = useState(false);
+
+  // --- 1. State management for form data ---
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  // --- 2. State for submission status message ---
+  const [submissionStatus, setSubmissionStatus] = useState('');
 
   useEffect(() => {
     if (isFirstLoad) {
       const timer = setTimeout(() => {
         setIsFirstLoad(false);
         sessionStorage.setItem('contact-visited', 'true');
-      }, 2500); // Updated to 2.5 seconds
+      }, 2500);
 
       return () => clearTimeout(timer);
     }
@@ -37,6 +48,58 @@ const Contact = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isFirstLoad]);
+
+  // --- 3. Handler for input changes ---
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // --- 4. Advanced form submission handler ---
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmissionStatus('Sending...');
+
+    const finalFormData = {
+        ...formData,
+        // IMPORTANT: Replace with your actual Access Key from web3forms.com
+        access_key: "YOUR_ACCESS_KEY_HERE"
+    };
+
+    const json = JSON.stringify(finalFormData);
+
+    try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            body: json
+        }).then((res) => res.json());
+
+        if (res.success) {
+            setSubmissionStatus("Message sent successfully!");
+            // Reset the form
+            setFormData({
+                name: '',
+                email: '',
+                subject: '',
+                message: ''
+            });
+            // Clear the message after a few seconds
+            setTimeout(() => setSubmissionStatus(''), 5000);
+        } else {
+            console.error("API Error:", res);
+            setSubmissionStatus(res.message || "Something went wrong. Please try again.");
+        }
+    } catch (error) {
+        console.error("Submission Error:", error);
+        setSubmissionStatus("Submission failed. Please check your connection.");
+    }
+  };
 
   const faqs = [
     {
@@ -103,18 +166,28 @@ const Contact = () => {
                 Send us a <span className="text-yellow-400">Message</span>
               </h2>
               
-              <form className="space-y-6">
+              {/* --- 5. Updated form with controlled components --- */}
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <Input
+                      type="text"
+                      name="name"
                       placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                       className="bg-black/20 border-white/20 text-white placeholder:text-white/60 focus:border-yellow-400 h-12"
                     />
                   </div>
                   <div>
                     <Input
                       type="email"
+                      name="email"
                       placeholder="Your Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                       className="bg-black/20 border-white/20 text-white placeholder:text-white/60 focus:border-yellow-400 h-12"
                     />
                   </div>
@@ -122,23 +195,38 @@ const Contact = () => {
                 
                 <div>
                   <Input
+                    type="text"
+                    name="subject"
                     placeholder="Subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                     className="bg-black/20 border-white/20 text-white placeholder:text-white/60 focus:border-yellow-400 h-12"
                   />
                 </div>
                 
                 <div>
                   <Textarea
+                    name="message"
                     placeholder="Your Message"
                     rows={6}
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     className="bg-black/20 border-white/20 text-white placeholder:text-white/60 focus:border-yellow-400 resize-none"
                   />
                 </div>
                 
-                <Button className="w-full bg-yellow-400 text-black hover:bg-yellow-300 font-bold py-4 text-lg rounded-xl transition-all duration-300 hover:scale-105">
+                <Button type="submit" className="w-full bg-yellow-400 text-black hover:bg-yellow-300 font-bold py-4 text-lg rounded-xl transition-all duration-300 hover:scale-105 group">
                   Send Message
-                  <Send className="ml-2 h-5 w-5" />
+                  <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
+
+                {/* --- 6. Form submission status display --- */}
+                {submissionStatus && (
+                  <p className="text-center mt-4 text-yellow-300 font-medium">
+                    {submissionStatus}
+                  </p>
+                )}
               </form>
             </div>
 
@@ -220,16 +308,6 @@ const Contact = () => {
                     <span className="text-sm font-medium text-white/90">Facebook</span>
                   </a>
                 </div>
-              </div>
-
-              {/* WhatsApp CTA */}
-              <div className="bg-gradient-to-r from-green-500/10 to-green-600/10 border border-green-500/20 rounded-3xl p-6 sm:p-8 text-center">
-                <MessageSquare className="w-12 h-12 lg:w-16 lg:h-16 text-green-400 mx-auto mb-4 lg:mb-6" />
-                <h3 className="text-lg lg:text-xl font-bold mb-3 lg:mb-4">Quick Chat on WhatsApp</h3>
-                <p className="text-white/70 mb-4 lg:mb-6 text-sm lg:text-base">Get instant responses to your queries</p>
-                <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl text-sm lg:text-base">
-                  Chat Now
-                </Button>
               </div>
             </div>
           </div>
