@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { Analytics } from "@vercel/analytics/react" // Import Vercel Analytics
+import { Analytics } from "@vercel/analytics/react"; // Import Vercel Analytics
 
 import Index from './pages/Index';
 import About from './pages/About';
