@@ -89,7 +89,7 @@ const TermsConditions = () => {
               </p>
               <div className="mt-4 space-y-2">
                 <p className="text-gray-300">
-                  Email: <a href="mailto:deccanhive@gmail.com" className="text-[#F9C326] hover:underline">deccanhive@gmail.com</a>
+                  Email: <a href="mailto:deccanhiveonline@gmail.com" className="text-[#F9C326] hover:underline">deccanhiveonline@gmail.com</a>
                 </p>
                 <p className="text-gray-300">
                   Phone: <a href="tel:+919063117093" className="text-[#F9C326] hover:underline">+91 9063117093</a>
