@@ -65,7 +65,7 @@ const Contact = () => {
     const finalFormData = {
         ...formData,
         // IMPORTANT: Replace with your actual Access Key from web3forms.com
-        access_key: "YOUR_ACCESS_KEY_HERE"
+        access_key: "6e27293d-8692-461d-a764-1b1ddc4d3cc0"
     };
 
     const json = JSON.stringify(finalFormData);
