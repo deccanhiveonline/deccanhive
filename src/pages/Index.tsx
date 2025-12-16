@@ -49,14 +49,11 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* ADDED: text-balance to fix uneven lines */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 text-foreground text-balance">
-              WE OFFER <span className="text-primary">360°</span><br />
-              DIGITAL SOLUTIONS<br />
-              THAT DELIVER
+            {/* FIX: Removed <br /> tags and added text-balance + max-w constraint */}
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 text-foreground text-balance max-w-4xl mx-auto">
+              WE OFFER <span className="text-primary">360°</span> DIGITAL SOLUTIONS THAT DELIVER
             </h1>
 
-            {/* ADDED: text-pretty to fix orphan words */}
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10 text-pretty">
               Helping micro and local businesses grow online with proven digital marketing strategies that generate real results.
             </p>
@@ -106,10 +103,9 @@ const Index = () => {
               viewport={{ once: true }}
             >
               <span className="label-tag mb-4">Our Works</span>
-              {/* ADDED: text-balance */}
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-balance">
-                OUR WORK SPEAKS<br />
-                LOUDER THAN WORDS
+              {/* FIX: Removed <br /> tags and added text-balance */}
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-balance max-w-3xl">
+                OUR WORK SPEAKS LOUDER THAN WORDS
               </h2>
             </motion.div>
             <Magnetic strength={0.3}>
@@ -133,7 +129,7 @@ const Index = () => {
                 className="group premium-card p-8"
               >
                 <p className="text-muted-foreground text-sm font-medium mb-2">{item.client}</p>
-                <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors text-balance">{item.title}</h3>
                 <p className="text-primary font-semibold">{item.result}</p>
               </motion.div>
             ))}
@@ -162,12 +158,10 @@ const Index = () => {
             
             <span className="label-tag mb-4 sm:mb-6">Let's Work Together</span>
             
-            {/* ADDED: text-balance */}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-foreground text-balance">
               LET'S WORK TOGETHER
             </h2>
             
-            {/* ADDED: text-pretty */}
             <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto mb-8 sm:mb-10 text-pretty">
               Ready to transform your business? Let's discuss how our 360° digital solutions can help you achieve your goals.
             </p>
