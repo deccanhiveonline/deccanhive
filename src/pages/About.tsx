@@ -1,265 +1,180 @@
-import { useState, useEffect } from 'react';
-import { ArrowRight, Users, Target, Award, TrendingUp, Eye, Heart, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import WhatsAppFloat from '@/components/WhatsAppFloat';
-import LoadingScreen from '@/components/LoadingScreen';
-import AnimatedBackground from '@/components/AnimatedBackground';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Eye, Lightbulb, Handshake, Target, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { GradualSpacing } from '@/components/ui/gradual-spacing';
+import { Magnetic } from '@/components/ui/magnetic';
+import SEOHead from '@/components/SEOHead';
+import { OrganizationSchema } from '@/components/JsonLd';
+import TeamSection from '@/components/TeamSection';
 
 const About = () => {
-  const navigate = useNavigate();
-  
-  // Scroll to top on page load
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [showWhatsApp, setShowWhatsApp] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    const handleScroll = () => {
-      setShowWhatsApp(window.scrollY > 200);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const team = [
-    {
-      name: 'Thurupu Praveen Kumar',
-      role: 'Founder and CEO',
-      bio: 'Visionary leader driving digital innovation'
-    },
-    {
-      name: 'Hari Priya Jaligam',
-      role: 'Copy Writing, Content Creation',
-      bio: 'Creative wordsmith and content strategist'
-    },
-    {
-      name: 'Gaddam Srinivas Murali',
-      role: 'Co-founder, Marketing Head',
-      bio: 'Strategic marketing expert and co-founder'
-    },
-    {
-      name: 'Karthik',
-      role: 'Web Developer, UI/UX & SEO Expert',
-      bio: 'Full-stack developer and digital experience specialist'
-    },
-    {
-      name: 'Akshay Gaddam',
-      role: 'Social Media Manager',
-      bio: 'Social media strategist and community builder'
-    },
-    {
-      name: 'Sonali Sharma',
-      role: 'Graphic Designer',
-      bio: 'Visual artist creating compelling brand experiences'
-    }
+  const coreValues = [
+    { icon: Lightbulb, title: 'INNOVATION', description: 'We constantly explore new strategies and technologies to keep your business ahead of the curve.' },
+    { icon: Handshake, title: 'TRANSPARENCY', description: 'Clear communication and honest reporting at every step of your digital journey.' },
+    { icon: Target, title: 'RESULTS-DRIVEN', description: 'Every action we take is focused on delivering measurable outcomes for your business.' },
+    { icon: Heart, title: 'PARTNERSHIP', description: 'We build long-term relationships, treating your success as our own.' },
   ];
-
-  const values = [
-    {
-      icon: Eye,
-      title: 'VISION',
-      description: 'To be the leading digital marketing agency that transforms local businesses into digital success stories.'
-    },
-    {
-      icon: Heart,
-      title: 'MISSION',
-      description: 'Empowering micro and local businesses with data-driven digital marketing strategies that deliver measurable results.'
-    },
-    {
-      icon: Zap,
-      title: 'VALUES',
-      description: 'Innovation, transparency, results-driven approach, and building long-term partnerships with our clients.'
-    }
-  ];
-
-  const stats = [
-    { number: '500+', label: 'Happy Clients' },
-    { number: '400%', label: 'Average ROI' },
-    { number: '5+', label: 'Years Experience' },
-    { number: '50M+', label: 'Revenue Generated' }
-  ];
-
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
 
   return (
-    <div className="min-h-screen bg-background text-white overflow-x-hidden">
-      <Header />
-      
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <SEOHead 
+        title="About Us - Deccan Hive Digital Marketing Agency"
+        description="Learn about Deccan Hive, a passionate team of digital marketing experts dedicated to helping local businesses thrive in the digital landscape."
+        canonicalPath="/about"
+      />
+      <OrganizationSchema />
+
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 py-20 lg:py-32">
-        <AnimatedBackground />
-
-        <div className="container mx-auto text-center relative z-10 animate-fade-in max-w-7xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-6 lg:mb-8 leading-tight">
-            WE ARE <span className="text-yellow-400">DECCAN HIVE</span><br />
-            <span className="text-white">DIGITAL INNOVATORS</span>
-          </h1>
-          
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/70 mb-8 lg:mb-12 max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto leading-relaxed px-2 sm:px-4">
-            A passionate team of digital marketing experts dedicated to helping local businesses thrive in the digital landscape. We combine creativity with data-driven strategies to deliver exceptional results.
-          </p>
-          
-          <Button 
-            className="bg-yellow-400 text-black hover:bg-yellow-300 font-semibold px-6 sm:px-8 lg:px-10 py-3 lg:py-4 rounded-full transition-all duration-300 hover:scale-105 text-base lg:text-lg shadow-lg"
-            size="lg"
-            onClick={() => {
-              const element = document.getElementById('our-philosophy');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+      <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24">
+        <div className="container mx-auto text-center max-w-5xl relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            DISCOVER OUR STORY
-            <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
-          </Button>
+            <span className="label-tag mb-6">About Us</span>
+            <GradualSpacing
+              text="WE ARE DECCAN HIVE"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground"
+              duration={0.3}
+              delayMultiple={0.02}
+            />
+            {/* ADDED: text-pretty */}
+            <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto text-pretty">
+              A passionate team of digital marketing experts dedicated to helping local businesses thrive in the digital landscape.
+            </p>
+            <div className="flex justify-center mt-6 sm:mt-8">
+              <Magnetic strength={0.3}>
+                <Button className="bg-primary text-primary-foreground rounded-full px-6 sm:px-8 h-12 sm:h-14 text-base font-semibold" asChild>
+                  <Link to="/contact">
+                    Work With Us
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </Magnetic>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 lg:px-6 bg-black/30">
+      {/* Mission Section */}
+      <section className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 xl:gap-12">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/10 hover:border-yellow-400/30 transition-all duration-300">
-                <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-yellow-400 mb-2 lg:mb-3">{stat.number}</div>
-                <div className="text-white/70 font-medium text-sm sm:text-base lg:text-lg xl:text-xl">{stat.label}</div>
-              </div>
-            ))}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className="label-tag mb-4">Our Mission</span>
+              {/* ADDED: text-balance */}
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-balance">
+                EMPOWERING <span className="text-gradient-gold">LOCAL BUSINESSES</span>
+              </h2>
+              {/* ADDED: text-pretty */}
+              <p className="text-muted-foreground text-lg mb-6 text-pretty">
+                At Deccan Hive, we believe every local business deserves access to world-class digital marketing. Our mission is to bridge the gap between traditional businesses and the digital world, providing affordable, effective, and results-driven marketing solutions.
+              </p>
+              {/* ADDED: text-pretty */}
+              <p className="text-muted-foreground text-pretty">
+                We specialize in understanding the unique challenges faced by micro and small businesses, crafting strategies that deliver real ROI without breaking the bank.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="premium-card p-8"
+            >
+              <Eye className="w-12 h-12 text-primary mb-6" />
+              {/* ADDED: text-balance */}
+              <h3 className="text-2xl font-bold mb-4 text-balance">Our Vision</h3>
+              {/* ADDED: text-pretty */}
+              <p className="text-muted-foreground text-lg text-pretty">
+                To be the leading digital marketing agency that transforms local businesses into digital success stories, creating a thriving ecosystem where small businesses can compete and win in the digital age.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Vision, Mission, Values */}
-      <section id="our-philosophy" className="py-12 sm:py-16 lg:py-24 px-4 lg:px-6">
+      {/* Core Values Section */}
+      <section className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-              OUR <span className="text-yellow-400">PHILOSOPHY</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="label-tag mb-4">What Drives Us</span>
+            {/* ADDED: text-balance */}
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance">
+              OUR CORE <span className="text-gradient-gold">VALUES</span>
             </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-            {values.map((value, index) => (
-              <div key={index} className="bg-black/50 backdrop-blur-sm border border-yellow-400/20 rounded-3xl p-6 sm:p-8 lg:p-10 text-center hover:border-yellow-400/50 transition-all duration-300 hover:transform hover:-translate-y-2 group">
-                <value.icon className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-yellow-400 mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4">{value.title}</h3>
-                <p className="text-white/70 leading-relaxed text-sm sm:text-base lg:text-lg">{value.description}</p>
-              </div>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {coreValues.map((value, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="premium-card p-8 text-center group hover:border-primary/40 transition-all duration-300"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
+                  <value.icon className="w-7 h-7 text-primary" />
+                </div>
+                {/* ADDED: text-balance */}
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors text-balance">{value.title}</h3>
+                {/* ADDED: text-pretty */}
+                <p className="text-muted-foreground text-sm text-pretty">{value.description}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 lg:px-6 bg-black/30">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-              MEET OUR <span className="text-yellow-400">TEAM</span>
+      <TeamSection />
+
+      {/* CTA Section */}
+      <section className="py-16 lg:py-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="premium-card p-8 sm:p-12 text-center"
+          >
+            {/* ADDED: text-balance */}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-balance">
+              Ready to Start Your <span className="text-gradient-gold">Success Story</span>?
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto px-2 sm:px-4">
-              The creative minds and strategic thinkers behind your digital success.
+            {/* ADDED: text-pretty */}
+            <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8 max-w-xl mx-auto text-pretty">
+              Join the 500+ businesses that have transformed their digital presence with Deccan Hive.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-            {team.map((member, index) => (
-              <div key={index} className="bg-black/50 backdrop-blur-sm border border-yellow-400/20 rounded-3xl p-6 sm:p-8 lg:p-10 text-center hover:border-yellow-400/50 transition-all duration-300 hover:transform hover:-translate-y-2 group">
-                <div className="relative mb-4 sm:mb-6">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full mx-auto flex items-center justify-center text-black font-bold text-xl sm:text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    {member.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                </div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">{member.name}</h3>
-                <p className="text-yellow-400 font-semibold mb-3 text-sm sm:text-base lg:text-lg">{member.role}</p>
-                <p className="text-white/70 text-sm sm:text-base">{member.bio}</p>
-              </div>
-            ))}
-          </div>
+            <div className="flex justify-center">
+              <Magnetic strength={0.3}>
+                <Button size="lg" className="bg-primary text-primary-foreground rounded-full px-8 h-12 sm:h-14 text-base font-semibold" asChild>
+                  <Link to="/contact">
+                    Get in Touch
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </Magnetic>
+            </div>
+          </motion.div>
         </div>
       </section>
-
-      {/* Why Choose Us */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 lg:px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
-            <div className="order-2 lg:order-1">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8 lg:mb-12">
-                WHY CHOOSE <span className="text-yellow-400">DECCAN HIVE?</span>
-              </h2>
-              <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                <div className="flex items-start space-x-3 sm:space-x-4 lg:space-x-6">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Target className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-black" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">Data-Driven Approach</h3>
-                    <p className="text-white/70 text-sm sm:text-base lg:text-lg">Every strategy is backed by comprehensive market research and analytics.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3 sm:space-x-4 lg:space-x-6">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Users className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-black" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">Local Market Expertise</h3>
-                    <p className="text-white/70 text-sm sm:text-base lg:text-lg">Deep understanding of Indian market dynamics and consumer behavior.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3 sm:space-x-4 lg:space-x-6">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Award className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-black" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">Proven Results</h3>
-                    <p className="text-white/70 text-sm sm:text-base lg:text-lg">Track record of delivering 400%+ ROI for our clients consistently.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="relative order-1 lg:order-2">
-              <div className="bg-gradient-to-br from-yellow-400/20 to-yellow-400/5 rounded-3xl lg:rounded-4xl p-6 sm:p-8 lg:p-12 border border-yellow-400/20">
-                <div className="text-center">
-                  <TrendingUp className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-yellow-400 mx-auto mb-4 sm:mb-6" />
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4">READY TO GROW?</h3>
-                  <p className="text-white/70 mb-4 sm:mb-6 text-sm sm:text-base lg:text-lg">
-                    Join 500+ businesses that trust us with their digital marketing needs.
-                  </p>
-                  <Button 
-                    className="bg-yellow-400 text-black hover:bg-yellow-300 font-semibold px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-full transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg shadow-lg"
-                    asChild
-                  >
-                    <Link to="/contact#contact-form">
-                      START YOUR JOURNEY
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-      <WhatsAppFloat visible={showWhatsApp} />
-    </div>
+    </main>
   );
 };
 
